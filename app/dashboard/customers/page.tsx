@@ -1,3 +1,23 @@
-export default function Page() {
-  return <div>Customers Page</div>
+import { fetchFilteredCustomers } from "@/app/lib/data"
+import CustomersTable from "@/app/ui/customers/table"
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string
+    page?: string
+  }
+}) {
+  const query = searchParams?.query || ""
+
+  const customers = await fetchFilteredCustomers(query)
+
+  return (
+    <div className="w-full">
+      <div>
+        <CustomersTable customers={customers} />
+      </div>
+    </div>
+  )
 }
